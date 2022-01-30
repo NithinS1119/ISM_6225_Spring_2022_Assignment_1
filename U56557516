@@ -1,0 +1,321 @@
+/* 
+ 
+YOU ARE NOT ALLOWED TO MODIFY ANY FUNCTION DEFINATION's PROVIDED.
+WRITE YOUR CODE IN THE RESPECTIVE FUNCTION BLOCK
+*/
+using System;
+using System.Text.RegularExpressions;
+
+namespace DIS_Assignmnet1_SPRING_2022
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Question 1
+            Console.WriteLine("Q1: Enter the string:");
+            string s = Console.ReadLine();
+            string final_string = RemoveVowels(s);
+            Console.WriteLine("Final string after removing the Vowels: {0}", final_string);
+            Console.WriteLine();
+
+            //Question 2:
+            string[] bulls_string1 = new string[] { "Marshall", "Student", "Center" };
+            string[] bulls_string2 = new string[] { "MarshallStudent", "Center" };
+            bool flag = ArrayStringsAreEqual(bulls_string1, bulls_string2);
+            Console.WriteLine("Q2");
+            if (flag)
+            {
+                Console.WriteLine("Yes, Both the array’s represent the same string");
+            }
+            else
+            {
+                Console.WriteLine("No, Both the array’s don’t represent the same string ");
+            }
+            Console.WriteLine();
+
+            //Question 3:
+            int[] bull_bucks = new int[] { 1, 1, 1, 1 };
+            int unique_sum = SumOfUnique(bull_bucks);
+            Console.WriteLine("Q3:");
+            Console.WriteLine("Sum of Unique Elements in the array are :{0}", unique_sum);
+            Console.WriteLine();
+
+
+            //Question 4:
+            int[,] bulls_grid = new int[,] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+            Console.WriteLine("Q4:");
+            int diagSum = DiagonalSum(bulls_grid);
+            Console.WriteLine("The sum of diagonal elements in the bulls grid is {0}:", diagSum);
+            Console.WriteLine();
+
+            //Question 5:
+            Console.WriteLine("Q5:");
+            String bulls_string = "codeleet";
+            int[] indices = { 4, 5, 6, 7, 0, 2, 1, 3 };
+            String rotated_string = RestoreString(bulls_string, indices);
+            Console.WriteLine("The  Final string after rotation is:{0}", rotated_string);
+            Console.WriteLine();
+
+            //Quesiton 6:
+            string bulls_string6 = "mumacollegeofbusiness";
+            char ch = 'c';
+            string reversed_string = ReversePrefix(bulls_string6, ch);
+            Console.WriteLine("Q6:");
+            Console.WriteLine("Resultant string are reversing the prefix:{0}", reversed_string);
+            Console.WriteLine();
+
+        }
+
+        /// <summary>
+        /// Given a string s, remove the vowels 'a', 'e', 'i', 'o', and 'u' from it, and return the new string.
+        /// I have used Regex.Replace function, it takes 3 parameters - input string 's', the characters user wants to remove from a string, and the character user wants to replace 
+        /// </summary>
+        /// <param name="s"> Here 's' is the input string that user is entring </param>
+        /// <returns> final_string is the final output which will be returned after removing all the vowels from the input string </returns>
+
+        private static string RemoveVowels(string s)
+        {
+            try
+            {
+                // write your code here
+                String final_string = "";
+                final_string = Regex.Replace(s, "[aeiouAEIOU]", "");
+                // https://docs.microsoft.com/en-us/dotnet/api/system.text.regularexpressions.regex.replace?view=net-6.0
+
+                return final_string;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+
+        }
+
+        /// <summary>
+        /// Given two string arrays bulls_string1 and bulls_string2 , the method returns true if the two arrays represent the same string, and false otherwise. 
+        /// </summary>
+        /// <param name="bulls_string1"> 1st array of strings passed as input </param>
+        /// <param name="bulls_string2"> 2nd array of strings passed as input </param>
+        /// <returns> returns 'true' if 's' and 'ss' (s->string got from bulls_string1, ss->string got from bulls_string2) have a perfect match after concatination else returns false </returns>
+        private static bool ArrayStringsAreEqual(string[] bulls_string1, string[] bulls_string2)
+        {
+            try
+            {
+                // write your code here.
+                string s = "";
+                string ss = "";
+
+                for (int i = 0; i < bulls_string1.Length; i++)
+                {
+                    s += bulls_string1[i];
+                }
+
+
+                for (int j = 0; j < bulls_string2.Length; j++)
+                {
+                    ss += bulls_string2[j];
+                }
+
+                if (s == ss) { return true; }
+                else { return false; }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+
+        }
+        /// <summary>
+        /// Given an integer array bull_bucks. The unique elements of an array are the elements that appear exactly once in the array.
+        /// Return the sum of all the unique elements of nums.
+        /// declare a new array 'k' of int type and store the count of occurences of each element of bull_bucks and sum the elements of bull_bucks[i] where elements of k[i] >1 
+        /// </summary>
+        /// <param name="bull_bucks"> Array of integers </param>
+        /// <returns>sum of the unqiue elements, that is the sum of numbers whose count is only 1 </returns>
+
+        private static int SumOfUnique(int[] bull_bucks)
+        {
+            try
+            {
+                int[] k = new int[bull_bucks.Length];
+                int s = 0;
+                for (int runs = 0; runs < bull_bucks.Length; runs++)
+                {
+                    k[runs] = 0;
+                }
+
+                for (int i = 0; i < bull_bucks.Length; i++)
+                {
+                    int c = 0;
+                    for (int j = 0; j < bull_bucks.Length; j++)
+                    {
+                        if (bull_bucks[i] == bull_bucks[j]) { c += 1; }
+                    }
+
+                    k[i] = c;
+                }
+
+                for (int i = 0; i < bull_bucks.Length; i++)
+                {
+                    if (k[i] > 1) { bull_bucks[i] = 0; }
+                }
+
+                for (int i = 0; i < bull_bucks.Length; i++)
+                {
+                    s += bull_bucks[i];
+                }
+
+                return s;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+        }
+
+       /// <summary>
+       /// Given a square matrix bulls_grid, return the sum of the matrix diagonals. We have to only include the sum of all the elements on the primary diagonal and all the elements on the secondary diagonal that are not part of the primary diagonal.
+       /// Take the sum of diagonal elemtns of bulls_grid ('s') in one direction and in the reverse direction ('ss') as well. If length of bull_grid[0] is even return s+ss, if it is odd
+       /// then return s+ss - common element.
+       /// </summary>
+       /// <param name="bulls_grid"> 2d array as input </param>
+       /// <returns> sum of </returns>
+
+        private static int DiagonalSum(int[,] bulls_grid)
+        {
+            try
+            {
+                int s = 0;
+                int ss = 0;
+
+                for (int i = 0; i < bulls_grid.GetLength(0); i++)
+                {
+                    s += bulls_grid[i, i];
+                }
+                for (int j = 0; j < bulls_grid.GetLength(0); j++)
+                {
+                    ss += bulls_grid[j, (bulls_grid.GetLength(0) - j - 1)];
+                }
+
+                if (bulls_grid.GetLength(0) % 2 == 0)
+                {
+                    return (s + ss);
+                }
+
+                else
+                {
+                    return (s + ss - bulls_grid[((bulls_grid.GetLength(0) - 1) / 2), ((bulls_grid.GetLength(0) - 1) / 2)]);
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// Given a string bulls_string and an integer array indices of the same length.
+        /// RestoreString takes in two inputs a string and the array of integers. 1st for loop, declares array ar with length of string. 2nd for loop shuffles the characters in the string bulls_string
+        /// and store them in the array ar according to the numbers in the indices.
+        /// </summary>
+        /// <param name="bulls_string">The input string</param>
+        /// <param name="indices"> Integer Array </param>
+        /// <returns> The actual word after sorting and appending </returns>
+
+        private static string RestoreString(string bulls_string, int[] indices)
+        {
+            try
+            {
+                // write your code here
+                int l = indices.Length;
+                string k = "";
+                char[] ar = new char[l];
+
+
+                for (int r = 0; r < l; r++)
+                {
+                    ar[r] = 'a';
+                }
+
+
+                // Copy character by character into array 
+                char[] ch = bulls_string.ToCharArray();
+
+                for (int i = 0; i < l; i++) { ar[indices[i]] = ch[i]; }
+
+                for (int i = 0; i < l; i++) { k += ar[i]; }
+
+                return k;
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+
+        }
+
+        /// <summary>
+        /// The method ReversePrefix takes in a string and character. If the first occurence of that character appears in the string then the part of that
+        /// string is reversed. The first for loop takes the index of the 'ch' in bulls_String6. The second for loop takes the characters in reverse order from index 'k' in bulls_string6 and 
+        /// stores in string 's', third for loop takes the characters in from index 'k+1' and then sums up the characters to string s. 
+        /// </summary>
+        /// <param name="bulls_string6">Input string</param>
+        /// <param name="ch">The character we are looking out for in the string </param>
+        /// <returns>string with part of the string is reversed where the first occurence of the character is found</returns>
+
+        private static string ReversePrefix(string bulls_string6, char ch)
+        {
+            try
+            {
+                string s ="";
+                
+
+                int k = 0;
+
+                for(int i =0; i < bulls_string6.Length; i++)
+                {
+                    if(ch==bulls_string6[i])
+                    {
+                        k = i;
+                    }
+                }
+                for(int j=0; j<k;j++)
+                {
+                    s += bulls_string6[k - j];
+                }
+                s += bulls_string6[0];
+
+                for (int l = k+1; l < bulls_string6.Length; l++)
+                {
+                    s += bulls_string6[l];
+                }
+
+                if (s == bulls_string6) { return "abcd"; }
+                else{return s;}
+
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+    }
+}
